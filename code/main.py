@@ -1,4 +1,5 @@
 import pygame
+from pygame.image import load
 import sys
 
 from settings import *
@@ -12,6 +13,10 @@ class Main:
             (WINDOW_WIDTH, WINDOW_HEIGHT))
         self.clock = pygame.time.Clock()
         self.editor = Editor()
+        pygame.mouse.set_cursor(
+            pygame.cursors.Cursor((0, 0), load(
+                'graphics/cursors/mouse.png').convert_alpha())
+        )
 
     def run(self):
         while True:
