@@ -12,6 +12,10 @@ class Editor:
         self.origin = vector(WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
         self.pan_active = False
         self.pan_offset = vector()
+        self.support_line_surface = pygame.Surface(
+            (WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.support_line_surface.set_colorkey('green')
+        self.support_line_surface.set_alpha(30)
 
     def event_loop(self):
         for event in pygame.event.get():
@@ -37,7 +41,26 @@ class Editor:
             else:
                 self.origin.x -= event.y*50
 
+    def draw_tile_lines(self):
+        cols = WINDOW_WIDTH//TILE_SIZE
+        rows = WINDOW_HEIGHT//TILE_SIZE
+
+        self.support_line_surface.fill('green')
+
+        for col in range(cols+1):
+            x = (self.origin.x % TILE_SIZE) + col * TILE_SIZE
+            pygame.draw.line(self.support_line_surface, LINE_COLOR,
+                             (x, 0), (x, WINDOW_HEIGHT))
+
+        for row in range(rows+1):
+            y = (self.origin.y % TILE_SIZE) + row * TILE_SIZE
+            pygame.draw.line(self.support_line_surface, LINE_COLOR,
+                             (0, y), (WINDOW_WIDTH, y))
+
+        self.display_surface.blit(self.support_line_surface, (0, 0))
+
     def run(self, dt):
         self.display_surface.fill('white')
+        self.draw_tile_lines()
         self.event_loop()
         pygame.draw.circle(self.display_surface, 'red', self.origin, 10)
