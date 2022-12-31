@@ -31,6 +31,12 @@ class Editor:
         if self.pan_active:
             self.origin = vector(mouse_pos()) - self.pan_offset
 
+        if event.type == pygame.MOUSEWHEEL:
+            if pygame.key.get_pressed()[pygame.K_LCTRL]:
+                self.origin.y -= event.y*50
+            else:
+                self.origin.x -= event.y*50
+
     def run(self, dt):
         self.display_surface.fill('white')
         self.event_loop()
