@@ -9,7 +9,7 @@ import sys
 class Editor:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
-        self.origin = vector()
+        self.origin = vector(WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
         self.pan_active = False
         self.pan_offset = vector()
 
